@@ -45,13 +45,13 @@ public class Computer {
         //if ballY = 50 and paddleY = 100 then difference = -50
         //Need to move paddleY down by the max speed
         Ball ball = new Ball(); //create a new ball to get BallY
-        int ballY = ball.getBallY();
+        double ballY = ball.getBallY();
 
         Computer cPaddle = new Computer(this.panel);
 
         int computerPaddleY = cPaddle.getComputerPaddleY();
-        int ballPaddleDifference = computerPaddleY - ballY;
-        int distanceToMove = Math.min(Math.abs(ballPaddleDifference), cPaddle.getComputerPaddleMaxSpeed());
+        double ballPaddleDifference = computerPaddleY - ballY;
+        double distanceToMove = Math.min(Math.abs(ballPaddleDifference), cPaddle.getComputerPaddleMaxSpeed());
 
         if (ballPaddleDifference > 0) {   //Difference is positive - paddle is below ball on screen
             computerPaddleY -= distanceToMove;

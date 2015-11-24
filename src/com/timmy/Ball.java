@@ -5,21 +5,21 @@ import java.awt.*;
 public class Ball {
 
     protected final int ballSize = 25;                //Diameter of ball
-    protected final double ballSpeed = 5;   //Again, pixels moved per clock tick
-    private int ballX = Game.WIDTH / 2;   //Imagine the ball is in a square box. These are the coordinates of the top of that box.
-    private int ballY = Game.HEIGHT / 2;   //So this starts the ball in (roughly) the center of the screen
+    protected final double ballSpeed = 10;   //Again, pixels moved per clock tick
+    private double ballX = Game.WIDTH / 2;   //Imagine the ball is in a square box. These are the coordinates of the top of that box.
+    private double ballY = Game.HEIGHT / 2;   //So this starts the ball in (roughly) the center of the screen
     protected double ballDirection = Math.PI + 1;   //heading left and up
 
     /* Get & Set */
-    public int getBallX() {return ballX;}
-    public int getBallY() {return ballY;}
+    public double getBallX() {return ballX;}
+    public double getBallY() {return ballY;}
     public int getBallSize() {return ballSize;}
     public double getBallSpeed() {return ballSpeed;}
     public double getBallDirection() {return ballDirection;}
 
     void paintBall(Graphics g) {
-        int x = getBallX();
-        int y = getBallY();
+        int x = (int) getBallX();
+        int y = (int) getBallY();
         int ballSize = getBallSize();
 
         /* Ball - a circle is just an oval with the height equal to the width */
@@ -90,8 +90,8 @@ public class Ball {
         //distance to move in the X direction is ballSpeed * cos(ballDirection)
         //distance to move in the Y direction is ballSpeed * sin(ballDirection)
 
-        ballX = (int) (ballX + (ballSpeed * Math.cos(ballDirection)));
-        ballY = (int) (ballY + (ballSpeed * Math.sin(ballDirection)));
+        ballX = (ballX + (ballSpeed * Math.cos(ballDirection)));
+        ballY = (ballY + (ballSpeed * Math.sin(ballDirection)));
 
         // ** TRIGONOMETRY END **
     }
