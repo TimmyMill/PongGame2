@@ -12,9 +12,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Ball gameBall= new Ball();
     private Computer cPaddle = new Computer(this);
     private Player hPaddle = new Player();
-    protected int gameSpeed = 65;  //How many milliseconds between clock ticks? Reduce this to speed up game
+    protected int gameSpeed = 50;  //How many milliseconds between clock ticks? Reduce this to speed up game
+    static Timer gameTimer;
 
     GamePanel() {
+        gameTimer = new Timer(gameSpeed, this);
+        gameTimer.start();
+
         this.addKeyListener(this);
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -26,44 +30,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     private void displayGame(Graphics g) {
-        displayBall(g);
-        displayComputerPaddle(g);
-        displayHumanPaddle(g);
+        gameBall.paintBall(g);
+        cPaddle.paintComputerPaddle(g);
+        hPaddle.paintUserPaddle(g);
     }
 
     private void displayGameOver(Graphics g) {
         g.clearRect(200, 100, 200, 200);
         g.drawString("GAME OVER!", 50, 25);
-    }
-
-    private void displayBall(Graphics g) {
-        int x = gameBall.getBallX();
-        int y = gameBall.getBallY();
-        int ballSize = gameBall.getBallSize();
-
-        /* Ball - a circle is just an oval with the height equal to the width */
-        g.setColor(Color.GREEN);
-        g.fillOval(x, y, ballSize, ballSize);
-    }
-
-    private void displayComputerPaddle(Graphics g) {
-        int computerPaddleY = cPaddle.getComputerPaddleY();
-        int paddleSize = Computer.getPaddleSize();
-        int paddleDistanceFromSide = Computer.getPaddleDistanceFromSide();
-
-        /* Computer paddle */
-        g.setColor(Color.black);
-        g.drawLine(paddleDistanceFromSide, computerPaddleY - paddleSize, paddleDistanceFromSide, computerPaddleY + paddleSize);
-    }
-
-    private void displayHumanPaddle(Graphics g) {
-        int humanPaddleY = hPaddle.getHumanPaddleY();
-        int paddleSize = Player.getPaddleSize();
-        int paddleDistanceFromSide = Player.getPaddleDistanceFromSide();
-
-        /* Human paddle */
-        g.setColor(Color.black);
-        g.drawLine(Game.WIDTH - paddleDistanceFromSide, humanPaddleY - paddleSize, Game.WIDTH - paddleDistanceFromSide, humanPaddleY + paddleSize);
     }
 
     private void update() {
@@ -106,13 +80,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent event) {
         gameBall.moveBall();
         cPaddle.moveComputerPaddle();
-//        if (Game.getGameState() == Game.GAME_OVER) {
-//
-//        }
-        Timer timer = new Timer(gameSpeed, this);
-        timer.start();
+        if (Game.getGameState() == Game.GAME_OVER) {
+            gameTimer.stop();
+        }
         this.repaint();
-
     }
 
     @Override
@@ -150,25 +121,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     private void moveDown() {
         //Coordinates decrease as you go up the screen, that's why this looks backwards.
-        int humanPaddleY = hPaddle.getHumanPaddleY();
+        int humanPaddleY = hPaddle.getUserPaddleY();
         int paddleSize = Player.getPaddleSize();
         int humanPaddleMaxSpeed = hPaddle.getHumanPaddleMaxSpeed();
 
         if (humanPaddleY < Game.HEIGHT - paddleSize) {
             humanPaddleY+=humanPaddleMaxSpeed;
-            hPaddle.setHumanPaddleY(humanPaddleY);
+            hPaddle.setUserPaddleY(humanPaddleY);
         }
     }
 
     private void moveUp() {
         //Coordinates increase as you go down the screen, that's why this looks backwards.
-        int humanPaddleY = hPaddle.getHumanPaddleY();
+        int humanPaddleY = hPaddle.getUserPaddleY();
         int paddleSize = Player.getPaddleSize();
         int humanPaddleMaxSpeed = hPaddle.getHumanPaddleMaxSpeed();
 
         if (humanPaddleY > paddleSize) {
             humanPaddleY-=humanPaddleMaxSpeed;
-            hPaddle.setHumanPaddleY(humanPaddleY);
+            hPaddle.setUserPaddleY(humanPaddleY);
         }
     }
 

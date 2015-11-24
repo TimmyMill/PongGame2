@@ -1,20 +1,31 @@
 package com.timmy;
 
+import java.awt.*;
+
 public class Ball {
 
-    protected final int ballSize = 10;                //Diameter of ball
+    protected final int ballSize = 25;                //Diameter of ball
     protected final double ballSpeed = 5;   //Again, pixels moved per clock tick
     private int ballX = Game.WIDTH / 2;   //Imagine the ball is in a square box. These are the coordinates of the top of that box.
     private int ballY = Game.HEIGHT / 2;   //So this starts the ball in (roughly) the center of the screen
     protected double ballDirection = Math.PI + 1;   //heading left and up
 
-//    Ball() {}
-
+    /* Get & Set */
     public int getBallX() {return ballX;}
     public int getBallY() {return ballY;}
     public int getBallSize() {return ballSize;}
     public double getBallSpeed() {return ballSpeed;}
     public double getBallDirection() {return ballDirection;}
+
+    void paintBall(Graphics g) {
+        int x = getBallX();
+        int y = getBallY();
+        int ballSize = getBallSize();
+
+        /* Ball - a circle is just an oval with the height equal to the width */
+        g.setColor(Color.GREEN);
+        g.fillOval(x, y, ballSize, ballSize);
+    }
 
     void moveBall() {
         //move in current direction
@@ -37,7 +48,7 @@ public class Ball {
         //If ballX is at a paddle AND ballY is within the paddle size.
         //Hit human paddle?
         Player hPaddle = new Player();
-        int humanPaddleY = hPaddle.getHumanPaddleY();
+        int humanPaddleY = hPaddle.getUserPaddleY();
         int paddleDistanceFromSide = Player.getPaddleDistanceFromSide();
         int paddleSize = Player.getPaddleSize();
 

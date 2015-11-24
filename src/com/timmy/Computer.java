@@ -1,5 +1,7 @@
 package com.timmy;
 
+import java.awt.*;
+
 public class Computer {
 
     private static final int paddleSize = 25;     //Actually half the paddle size - how much to draw on each side of center
@@ -23,6 +25,16 @@ public class Computer {
 
     public int getComputerPaddleMaxSpeed() {return computerPaddleMaxSpeed;}
     public static int getComputerPaddleSpeed() {return computerPaddleSpeed;}
+
+    void paintComputerPaddle(Graphics g) {
+        int computerPaddleY = getComputerPaddleY();
+        int paddleSize = getPaddleSize();
+        int paddleDistanceFromSide = getPaddleDistanceFromSide();
+
+        /* Computer paddle */
+        g.setColor(Color.black);
+        g.drawLine(paddleDistanceFromSide, computerPaddleY - paddleSize, paddleDistanceFromSide, computerPaddleY + paddleSize);
+    }
 
     //Uses the current position of ball and paddle to move the computer paddle towards the ball
     protected void moveComputerPaddle() {
