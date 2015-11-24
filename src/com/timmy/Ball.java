@@ -16,7 +16,7 @@ public class Ball {
     public double getBallSpeed() {return ballSpeed;}
     public double getBallDirection() {return ballDirection;}
 
-    protected void moveBall() {
+    void moveBall() {
         //move in current direction
         //bounce off walls and paddle
         //TODO Take into account speed of paddles

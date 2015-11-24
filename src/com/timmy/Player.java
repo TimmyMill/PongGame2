@@ -10,7 +10,6 @@ public class Player {
     protected static int humanPaddleSpeed = 0;      // "speed" is pixels moved up or down per clock tick
 
     Player() {
-
     }
 
     public static int getPaddleSize() {return paddleSize;}

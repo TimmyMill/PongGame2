@@ -12,7 +12,7 @@ public class Game extends JFrame {
     static final int GAME_OVER = 3;
     protected static int gameState = GAME_START;
 
-    private GamePanel panel;
+    protected GamePanel panel;
 
     public Game() {
         /* JFrame settings for window */

@@ -9,16 +9,18 @@ import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
-    private Ball gameBall = new Ball();
-    private Computer cPaddle = new Computer(this);
-    private Player hPaddle = new Player();
+    private Ball gameBall;
+    private Computer cPaddle;
+    private Player hPaddle;
     protected int gameSpeed = 65;  //How many milliseconds between clock ticks? Reduce this to speed up game
 
     GamePanel() {
-//        Timer timer = new Timer(gameSpeed, this);
-        this.addKeyListener(this);
-        this.setFocusable(true);
-        this.requestFocusInWindow();
+        gameBall = new Ball();
+        cPaddle = new Computer(this);
+        hPaddle = new Player();
+        addKeyListener(this);
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     private void displayInstructions(Graphics g) {
@@ -45,6 +47,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         /* Ball - a circle is just an oval with the height equal to the width */
         g.setColor(Color.GREEN);
         g.fillOval(x, y, ballSize, ballSize);
+        this.repaint();
     }
 
     private void displayComputerPaddle(Graphics g) {
@@ -97,6 +100,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+
     /* ActionListener */
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -138,6 +142,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             System.out.println("up key");
             moveUp();
         }
+        this.repaint();
     }
 
     @Override
@@ -166,4 +171,5 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             hPaddle.setHumanPaddleY(humanPaddleY);
         }
     }
+
 }
