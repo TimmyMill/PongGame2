@@ -32,7 +32,7 @@ public class Computer {
 
         //if ballY = 50 and paddleY = 100 then difference = -50
         //Need to move paddleY down by the max speed
-        Ball ball = new Ball(Game.HEIGHT / 2, Game.WIDTH / 2); //create a new ball to get BallY
+        Ball ball = new Ball(); //create a new ball to get BallY
         int ballY = ball.getBallY();
 
         Computer cPaddle = new Computer(this.panel);

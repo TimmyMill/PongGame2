@@ -8,10 +8,7 @@ public class Ball {
     private int ballY = Game.HEIGHT / 2;   //So this starts the ball in (roughly) the center of the screen
     protected double ballDirection = Math.PI + 1;   //heading left and up
 
-    Ball(int ballX, int ballY) {
-        this.ballX = ballX;
-        this.ballY = ballY;
-    }
+//    Ball() {}
 
     public int getBallX() {return ballX;}
     public int getBallY() {return ballY;}

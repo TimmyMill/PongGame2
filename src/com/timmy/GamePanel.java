@@ -9,12 +9,13 @@ import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
-    private Ball gameBall = new Ball(Game.HEIGHT / 2, Game.WIDTH / 2);
+    private Ball gameBall = new Ball();
     private Computer cPaddle = new Computer(this);
     private Player hPaddle = new Player();
+    protected int gameSpeed = 65;  //How many milliseconds between clock ticks? Reduce this to speed up game
 
     GamePanel() {
-
+//        Timer timer = new Timer(gameSpeed, this);
         this.addKeyListener(this);
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -87,10 +88,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 //        }
     }
 
+
+//    ActionListener gameUpdater = new ActionListener() {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            gameBall.moveBall();
+//            cPaddle.moveComputerPaddle();
+//        }
+//    };
+
+    /* ActionListener */
     @Override
     public void actionPerformed(ActionEvent event) {
         gameBall.moveBall();
         cPaddle.moveComputerPaddle();
+        Timer timer = new Timer(gameSpeed, this);
+        timer.start();
     }
 
     @Override
