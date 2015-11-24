@@ -9,8 +9,10 @@ public class Computer {
     protected int computerPaddleMaxSpeed = 3;   //Max number of pixels that computer paddle can move clock tick. Higher number = easier for computer
     protected static int computerPaddleSpeed = 0;   // same
 
-    Computer() {
+    protected GamePanel panel;
 
+    Computer(GamePanel panel) {
+        this.panel = panel;
     }
 
     public static int getPaddleSize() {return paddleSize;}
@@ -23,7 +25,7 @@ public class Computer {
     public static int getComputerPaddleSpeed() {return computerPaddleSpeed;}
 
     //Uses the current position of ball and paddle to move the computer paddle towards the ball
-    static void moveComputerPaddle() {
+    protected void moveComputerPaddle() {
 
         //if ballY = 100 and paddleY is 50, difference = 50, need to adjust
         //paddleY by up to the max speed (the minimum of difference and maxSpeed)
@@ -33,7 +35,7 @@ public class Computer {
         Ball ball = new Ball(Game.HEIGHT / 2, Game.WIDTH / 2); //create a new ball to get BallY
         int ballY = ball.getBallY();
 
-        Computer cPaddle = new Computer();
+        Computer cPaddle = new Computer(this.panel);
 
         int computerPaddleY = cPaddle.getComputerPaddleY();
         int ballPaddleDifference = computerPaddleY - ballY;
