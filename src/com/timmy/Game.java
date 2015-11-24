@@ -10,7 +10,7 @@ public class Game extends JFrame {
     static final int GAME_START = 1;
     static final int GAMEPLAY = 2;
     static final int GAME_OVER = 3;
-    private static int gameState = GAME_START;
+    protected static int gameState = GAME_START;
 
     GamePanel panel;
 
@@ -27,7 +27,11 @@ public class Game extends JFrame {
         //JPane settings
         panel = new GamePanel();
         add(panel);
+        setGameState(GAME_START);
     }
+
+    public static int getGameState() {return gameState;}
+    public static void setGameState(int gameState) {Game.gameState = gameState;}
 
     public static void main(String[] args) {
         new Game();

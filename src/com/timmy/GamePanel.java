@@ -32,6 +32,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         displayHumanPaddle(g);
     }
 
+    private static void displayGameOver(Graphics g) {
+        g.clearRect(200, 100, 200, 200);
+        g.drawString("GAME OVER!", 50, 25);
+    }
+
     private void displayBall(Graphics g) {
         int x = gameBall.getBallX();
         int y = gameBall.getBallY();
@@ -66,44 +71,44 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-//        int gameState = Game.getGameState();//Gets the game's current state from Main
-//
-//        /* Switch to display the different parts of the game */
-//        switch (gameState) {
-//            /* GAME_START */
-//            case 1: {
-//                displayInstructions(g);//Displays the instructions at the beginning of the game
-//                break;
-//            }
-//            /* GAMEPLAY */
-//            case 2: {
-//                displayGame(g);//Displays the game components while game is being played
-//                break;
-//            }
-//            /* GAME_OVER */
-//            case 3: {
-//                displayGameOver(g);//Displayed at the end of game
-//                break;
-//            }
-//        }
+        /* Gets the game's current state from Main */
+        int gameState = Game.getGameState();
+
+        /* Switch to display the different parts of the game */
+        switch (gameState) {
+            /* GAME_START */
+            case 1: {
+            /* Displays the instructions at the beginning of the game */
+                displayInstructions(g);
+                break;
+            }
+            /* GAMEPLAY */
+            case 2: {
+            /* Displays the game components while game is being played */
+                displayGame(g);
+                break;
+            }
+            /* GAME_OVER */
+            case 3: {
+            /* Displayed at the end of game */
+                displayGameOver(g);
+                break;
+            }
+        }
     }
-
-
-//    ActionListener gameUpdater = new ActionListener() {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            gameBall.moveBall();
-//            cPaddle.moveComputerPaddle();
-//        }
-//    };
 
     /* ActionListener */
     @Override
     public void actionPerformed(ActionEvent event) {
         gameBall.moveBall();
         cPaddle.moveComputerPaddle();
+//        if (Game.getGameState() == Game.GAME_OVER) {
+//
+//        }
         Timer timer = new Timer(gameSpeed, this);
         timer.start();
+        this.repaint();
+
     }
 
     @Override
@@ -117,6 +122,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent event) {
+
+        /* If the game's current state is at GAME_START, then start it by setting the game state to GAMEPLAY */
+        if (Game.getGameState() == Game.GAME_START) {
+            Game.setGameState(Game.GAMEPLAY);
+            this.repaint();
+            return;
+        }
+
         if (event.getKeyCode() == KeyEvent.VK_DOWN) {
             System.out.println("down key");
             moveDown();
