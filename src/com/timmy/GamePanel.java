@@ -18,9 +18,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         gameBall = new Ball();
         cPaddle = new Computer(this);
         hPaddle = new Player();
-        addKeyListener(this);
-        setFocusable(true);
-        requestFocusInWindow();
+        this.addKeyListener(this);
+        this.setFocusable(true);
+        this.requestFocusInWindow();
     }
 
     private void displayInstructions(Graphics g) {
@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         displayHumanPaddle(g);
     }
 
-    private static void displayGameOver(Graphics g) {
+    private void displayGameOver(Graphics g) {
         g.clearRect(200, 100, 200, 200);
         g.drawString("GAME OVER!", 50, 25);
     }
@@ -47,7 +47,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         /* Ball - a circle is just an oval with the height equal to the width */
         g.setColor(Color.GREEN);
         g.fillOval(x, y, ballSize, ballSize);
-        this.repaint();
     }
 
     private void displayComputerPaddle(Graphics g) {
@@ -68,6 +67,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         /* Human paddle */
         g.setColor(Color.black);
         g.drawLine(Game.WIDTH - paddleDistanceFromSide, humanPaddleY - paddleSize, Game.WIDTH - paddleDistanceFromSide, humanPaddleY + paddleSize);
+    }
+
+    private void update() {
+
     }
 
     @Override
