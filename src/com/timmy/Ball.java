@@ -26,6 +26,7 @@ public class Ball {
         boolean hitComputerPaddle = false;
 
         if (ballX <= 0 || ballX >= Game.WIDTH ) {
+            Game.setGameState(Game.GAME_OVER);
             return;
         }
 
@@ -33,6 +34,54 @@ public class Ball {
             hitWall = true;
         }
 
+        //If ballX is at a paddle AND ballY is within the paddle size.
+        //Hit human paddle?
+        Player hPaddle = new Player();
+        int humanPaddleY = hPaddle.getHumanPaddleY();
+        int paddleDistanceFromSide = Player.getPaddleDistanceFromSide();
+        int paddleSize = Player.getPaddleSize();
 
+        if (ballX >= Game.HEIGHT-(paddleDistanceFromSide+(ballSize)) && (ballY >humanPaddleY-paddleSize && ballY < humanPaddleY+paddleSize))
+            hitHumanPaddle = true;
+
+        //Hit computer paddle?
+        Computer cPaddle = new Computer(new GamePanel());
+        int computerPaddleY = cPaddle.getComputerPaddleY();
+        paddleDistanceFromSide = Computer.getPaddleDistanceFromSide();
+        paddleSize = Computer.getPaddleSize();
+
+        if (ballX <= paddleDistanceFromSide && (ballY > computerPaddleY-paddleSize && ballY < computerPaddleY+paddleSize))
+            hitComputerPaddle = true;
+
+        if (hitWall) {
+            //bounce
+            ballDirection = ( (2 * Math.PI) - ballDirection );
+            System.out.println("ball direction " + ballDirection);
+        }
+
+        //Bounce off computer paddle - just need to modify direction
+        if (hitComputerPaddle) {
+            ballDirection = (Math.PI) - ballDirection;
+            //TODO factor in speed into new direction
+            //TODO So if paddle is moving down quickly, the ball will angle more down too
+        }
+
+        //Bounce off computer paddle - just need to modify direction
+        if (hitHumanPaddle) {
+            ballDirection = (Math.PI) - ballDirection;
+            //TODO consider speed of paddle
+        }
+
+        //Now, move ball correct distance in the correct direction
+
+        // ** TRIGONOMETRY **
+
+        //distance to move in the X direction is ballSpeed * cos(ballDirection)
+        //distance to move in the Y direction is ballSpeed * sin(ballDirection)
+
+        ballX = (int) (ballX + (ballSpeed * Math.cos(ballDirection)));
+        ballY = (int) (ballY + (ballSpeed * Math.sin(ballDirection)));
+
+        // ** TRIGONOMETRY END **
     }
 }
