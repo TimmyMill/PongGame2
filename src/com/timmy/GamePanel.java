@@ -9,15 +9,12 @@ import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
-    private Ball gameBall;
-    private Computer cPaddle;
-    private Player hPaddle;
+    private Ball gameBall= new Ball();
+    private Computer cPaddle = new Computer(this);
+    private Player hPaddle = new Player();
     protected int gameSpeed = 65;  //How many milliseconds between clock ticks? Reduce this to speed up game
 
     GamePanel() {
-        gameBall = new Ball();
-        cPaddle = new Computer(this);
-        hPaddle = new Player();
         this.addKeyListener(this);
         this.setFocusable(true);
         this.requestFocusInWindow();
